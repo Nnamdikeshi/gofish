@@ -1,10 +1,6 @@
 package com.loops_and_arrays;
 
-import java.io.FileReader;
-import java.io.IOError;
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.FileHandler;
 
 public class GoFish {
 
@@ -35,7 +31,7 @@ public class GoFish {
 
     static Random rnd;
 
-    static int numberOfCardsInHand = 7;
+    static int initialHandSize = 7;
     static int totalCardsInDeck = 52;
 
     static int cardsNeededForBook = 4;
@@ -465,7 +461,7 @@ public class GoFish {
 
         String[] hand = new String[totalCardsInDeck];    //max number of cards, rest will be null
 
-        for (int c = 0 ; c < numberOfCardsInHand ; c++) {
+        for (int c = 0 ; c < initialHandSize ; c++) {
             hand[c] = dealCard();
         }
 

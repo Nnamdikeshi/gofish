@@ -1,10 +1,6 @@
 package com.data_structures;
 
-import java.io.FileReader;
-import java.io.IOError;
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.FileHandler;
 
 public class GoFish {
 
@@ -31,19 +27,16 @@ public class GoFish {
      * Play proceeds to the left. When all sets of cards have been laid down in books,
      * the game ends. The player with the most books wins.*/
 
-
     //TODO tests
-            //TODO methods being methody and returning things
-
 
     static Random rnd = new Random();
 
-    static int numberOfCardsInHand = 7;
-
-    static int cardsNeededForBook = 4;
-    static int totalBooks = 13;
+    static int initialHandSize = 7;
 
     static String[] suits = {"H", "C", "S", "D"};
+
+    static int cardsNeededForBook = suits.length;
+    static int totalBooks = 13;
 
     static ArrayList<String> deck;
 
@@ -306,7 +299,7 @@ public class GoFish {
 
         ArrayList<String> hand = new ArrayList<String>();    //max number of cards, rest will be null
 
-        for (int c = 0 ; c < numberOfCardsInHand ; c++) {
+        for (int c = 0 ; c < initialHandSize ; c++) {
             hand.add(dealCard());
         }
 
