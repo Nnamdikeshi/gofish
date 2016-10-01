@@ -19,6 +19,8 @@ public abstract class Player {
     }
 
 
+    //TODO break this into methods for testing.
+
     public int playTurnAgainst(Player opponent) {
 
         System.out.println(this + "'s hand is " + hand);
@@ -46,20 +48,35 @@ public abstract class Player {
             cardValRequested = identifyCardValueToAskFor();
         }
 
-        System.out.println("Player asks opponent for " + cardValRequested);
+        System.out.println(this + " asks opponent for " + cardValRequested);
 
         boolean fish = !opponent.hasCard(cardValRequested);
 
         if (fish) {
 
-            System.out.println(opponent + " doesn't have that card. Player goes fishing");
-            Card cardDrawnFromPool = drawCardForHand();
+            System.out.println(opponent + " doesn't have that card. " + this + " goes fishing");
 
-            System.out.println("Player got a " + cardDrawnFromPool);
-            while (cardDrawnFromPool.value.equals(cardValRequested)) {
-                cardDrawnFromPool = drawCardForHand();
-                System.out.println("That's the card you wanted - player gets to draw another card, and gets a " + cardDrawnFromPool);
+            Card cardDrawnFromPool = drawCardForHand();   //TODO check for null
+
+            if (cardDrawnFromPool == null) {
+                System.out.println("Pool is empty. Next player's turn.");
             }
+
+            else {
+                System.out.println(this + " got a " + cardDrawnFromPool);
+
+                while (cardDrawnFromPool.value.equals(cardValRequested)) {
+                    cardDrawnFromPool = drawCardForHand();
+                    if (cardDrawnFromPool == null) {
+                        System.out.println("Pool is empty. Next player's turn.");
+                        break;
+                    }
+                    System.out.println("That's the card you wanted - you get to draw another card, and get a " + cardDrawnFromPool);
+                }
+            }
+            System.out.println(this + "'s hand is now " + hand);
+            Log.print(opponent + "'s hand is " + opponent.hand);
+
         }
 
         else {
@@ -77,8 +94,7 @@ public abstract class Player {
         int booksMadeThisTurn = makeBooks();
         totalBooksMade += booksMadeThisTurn;
 
-        System.out.println("Player has made this many books on this turn: " + booksMadeThisTurn);
-        System.out.println("humanBooks = " + totalBooksMade);
+        System.out.println(this + " made this many books on this turn: " + booksMadeThisTurn + " for a total of " + totalBooksMade);
 
         return booksMadeThisTurn;
 
@@ -90,7 +106,7 @@ public abstract class Player {
 
         int totalBooksMade = 0;
 
-        //Brute force approach! Is there a book of Aces? Is there a book of 2s? ...
+        //Brute force approach. Is there a book of Aces? Is there a book of 2s? ... TODO is there a better way?
         for (String value : Deck.values) {
 
             int cardsForBook = hand.countCardsOfValue(value);
@@ -116,7 +132,19 @@ public abstract class Player {
 
     private Card drawCardForHand() {
 
-        return GoFish.deck.dealCard();
+        Card card = GoFish.deck.dealCard();
+
+        //FIXME check for null - pool is empty, all cards are in player's hands
+
+        if (card != null) {
+            hand.addCard(card);
+        }
+        else {
+            Log.print("Pool is empty, no card to add");
+        }
+
+        return card;
+
 
     }
 

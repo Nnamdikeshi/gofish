@@ -85,6 +85,9 @@ public class GoFish {
 
             playersTurn = (playersTurn+1) % totalPlayers;
 
+
+            Log.print("Size of pool = " + deck.cardsLeft());
+
         }
 
         //Who has the most books?

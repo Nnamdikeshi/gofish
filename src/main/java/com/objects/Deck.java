@@ -36,7 +36,11 @@ public class Deck {
         }
 
     public Card dealCard() {
-        return cards.remove(0);
+        if (cards.size() > 0) {
+            return cards.remove(0);
+        } else {
+            return null;
+        }
     }
 
 
@@ -49,5 +53,16 @@ public class Deck {
         }
 
         return hand;
+    }
+
+    @Override
+    public String toString() {
+        return "Deck{" +
+                "cards=" + cards +
+                '}';
+    }
+
+    public int cardsLeft() {
+        return cards.size();
     }
 }
