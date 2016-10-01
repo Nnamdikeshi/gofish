@@ -133,13 +133,14 @@ public class GoFish {
             System.out.println("Opponent doesn't have that card. Player goes fishing");
             String cardDrawnFromPool = drawCardForHand(playerHand);
 
+            //TODO check for pool being empty - don't add anything to hand
+
             booksMadeThisTurn += makeBooks(playerHand);
 
             System.out.println("Player got a " + cardDrawnFromPool);
             while (cardDrawnFromPool.equals(cardValRequested)) {
                 cardDrawnFromPool = drawCardForHand(playerHand);
                 System.out.println("That's the card you wanted - player gets to draw another card, and gets a " + cardDrawnFromPool);
-                booksMadeThisTurn += makeBooks(playerHand);
 
             }
         }
@@ -151,8 +152,6 @@ public class GoFish {
             printCards(playerHand);
             System.out.println("Opponent's hand is ");
             printCards(opponentHand);
-
-            booksMadeThisTurn += makeBooks(playerHand);
 
         }
 

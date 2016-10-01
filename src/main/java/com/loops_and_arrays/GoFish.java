@@ -128,18 +128,14 @@ public class GoFish {
             System.out.println("Computer goes fishing");
 
             String cardDrawnFromPool = drawCardForHand(computerHand);
+            //TODO check for pool being empty - don't add anything to hand
+
 
             System.out.println("Computer got a " + cardDrawnFromPool);
-
-            int newBooks = makeBooks(computerHand);
-            computerBooks += newBooks;
 
             while (cardDrawnFromPool.equals(cardValRequested)) {
                 cardDrawnFromPool = drawCardForHand(computerHand);
                 System.out.println("Computer gets to draw another card, gets a " + cardDrawnFromPool);
-
-                newBooks = makeBooks(computerHand);
-                computerBooks += newBooks;
 
             }
         }
@@ -152,9 +148,6 @@ public class GoFish {
             System.out.println("Human's hand is ");
             printCards(humanHand);
 
-            int newBooks = makeBooks(computerHand);
-            computerBooks += newBooks;
-
         }
 
         int newBooks = makeBooks(computerHand);
@@ -162,7 +155,6 @@ public class GoFish {
         System.out.println("Computer has this many books " + computerBooks);
 
     }
-
 
 
     public static void humanPlay() {
