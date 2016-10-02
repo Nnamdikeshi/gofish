@@ -56,38 +56,17 @@ public abstract class Player {
 
             System.out.println(opponent + " doesn't have that card. " + this + " goes fishing");
 
-            Card cardDrawnFromPool = drawCardForHand();   //TODO check for null
+            goFish(cardValRequested);
 
-            if (cardDrawnFromPool == null) {
-                System.out.println("Pool is empty. Next player's turn.");
-            }
-
-            else {
-                System.out.println(this + " got a " + cardDrawnFromPool);
-
-                while (cardDrawnFromPool.value.equals(cardValRequested)) {
-                    cardDrawnFromPool = drawCardForHand();
-                    if (cardDrawnFromPool == null) {
-                        System.out.println("Pool is empty. Next player's turn.");
-                        break;
-                    }
-                    System.out.println("That's the card you wanted - you get to draw another card, and get a " + cardDrawnFromPool);
-                }
-            }
             System.out.println(this + "'s hand is now " + hand);
             Log.print(opponent + "'s hand is " + opponent.hand);
+
 
         }
 
         else {
 
-            System.out.println(opponent + " has at least one of the cards requested ");
-
-            ArrayList<Card> opponentCards = opponent.hand.removeAll(cardValRequested);
-            hand.addAll(opponentCards);
-
-            System.out.println(this + "'s hand is " + hand);
-            Log.print(opponent + "'s hand is " + opponent.hand);
+            moveCardsToMyHand(opponent, cardValRequested);
 
         }
 
@@ -99,6 +78,42 @@ public abstract class Player {
         return booksMadeThisTurn;
 
     }
+
+    protected void goFish(String cardValRequested) {
+
+        Card cardDrawnFromPool = drawCardForHand();   //TODO check for null
+
+        if (cardDrawnFromPool == null) {
+            System.out.println("Pool is empty. Next player's turn.");
+        }
+
+        else {
+            System.out.println(this + " got a " + cardDrawnFromPool);
+
+            while (cardDrawnFromPool.value.equals(cardValRequested)) {
+                cardDrawnFromPool = drawCardForHand();
+                if (cardDrawnFromPool == null) {
+                    System.out.println("Pool is empty. Next player's turn.");
+                    break;
+                }
+                System.out.println("That's the card you wanted - you get to draw another card, and get a " + cardDrawnFromPool);
+            }
+        }
+
+    }
+
+    protected void moveCardsToMyHand(Player opponent, String cardValRequested) {
+
+        System.out.println(opponent + " has at least one of the cards requested ");
+
+        ArrayList<Card> opponentCards = opponent.hand.removeAll(cardValRequested);
+        hand.addAll(opponentCards);
+
+        System.out.println(this + "'s hand is " + hand);
+        Log.print(opponent + "'s hand is " + opponent.hand);
+    }
+
+
 
     protected int makeBooks() {
         //Find books, return total number of books made to book count
@@ -126,15 +141,17 @@ public abstract class Player {
 
 
 
-    private boolean hasCard(String cardVal) {
+    protected boolean hasCard(String cardVal) {
+
         return this.hand.hasCardOfThisValue(cardVal);
+
     }
 
-    private Card drawCardForHand() {
+    protected Card drawCardForHand() {
 
         Card card = GoFish.deck.dealCard();
 
-        //FIXME check for null - pool is empty, all cards are in player's hands
+        //check for null - pool is empty, all cards are in player's hands
 
         if (card != null) {
             hand.addCard(card);
@@ -148,6 +165,7 @@ public abstract class Player {
 
     }
 
+    //ComputerPlayer and HumanPlayer will implement these
 
     protected abstract String identifyCardValueToAskFor() ;
 

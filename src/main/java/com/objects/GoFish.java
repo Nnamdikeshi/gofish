@@ -108,7 +108,7 @@ public class GoFish {
 
     }
 
-    private static boolean allBooksCreated() {
+    protected static boolean allBooksCreated() {
 
         int totalBooksMade = 0;
         for (Player player : players) {
